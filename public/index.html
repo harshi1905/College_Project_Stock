@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everyday AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Everyday AI</h1>
+        <hr>
+        <div class="upload-section">
+            <div class="input-side">
+                <h2>Input Image</h2>
+                <input type="file" id="inputImage" accept="image/*" onchange="handleImageUpload(event)">
+                <img id="previewInputImage" src="" alt="Your Image" class="image">
+            </div>
+            <div class="output-side">
+                <h2>Upscaled Output</h2>
+                <div class="loader-container" id="loader-container" style="display: none;">
+                    <div id="loader" class="loader" style="display: none;"></div>
+                    <img id="outputImage" src="" alt="Upscaled Image" class="image output-image" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
