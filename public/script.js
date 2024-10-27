@@ -1,44 +1,53 @@
 function handleImageUpload(event) {
-    const inputImage = event.target.files[0];
-    if (!inputImage) return;
+    const inputImages = event.target.files;
+    if (!inputImages.length) return;
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        document.getElementById('previewInputImage').src = e.target.result;
-        document.getElementById('previewInputImage').style.display = 'block';
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('outputImage').style.display = 'none';
-    };
-    reader.readAsDataURL(inputImage);
+    const previewContainer = document.getElementById('previewInputImages');
+    previewContainer.innerHTML = ''; // Clear previous previews
+
+    Array.from(inputImages).forEach((inputImage) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'image';
+            previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(inputImage);
+    });
 
     document.getElementById('loader-container').style.display = 'flex';
     document.getElementById('loader').style.display = 'block';
-    document.getElementById('outputImage').style.display = 'none';
-
-    const imageName = inputImage.name;
-    const outputImagePath = `/output/${imageName}`;
+    document.getElementById('outputImages').style.display = 'none';
+    
+    const outputImagePaths = Array.from(inputImages).map(image => `/output/${image.name}`);
 
     setTimeout(() => {
-        fetch(outputImagePath)
-            .then(response => {
-                if (response.ok) {
-                    // Display the upscaled image if found and hide loader
-                    document.getElementById('outputImage').src = outputImagePath;
-                    document.getElementById('outputImage').style.display = 'block';
-                } else {
-                    // If not found, show an alert and hide the output image
-                    alert("Upscaled image not found in the output folder.");
-                    document.getElementById('outputImage').style.display = 'none';
-                }
+        Promise.all(outputImagePaths.map(path => fetch(path)))
+            .then(responses => {
+                const outputImagesContainer = document.getElementById('outputImages');
+                outputImagesContainer.innerHTML = ''; // Clear previous output
+
+                responses.forEach((response, index) => {
+                    if (response.ok) {
+                        const img = document.createElement('img');
+                        img.src = outputImagePaths[index];
+                        img.className = 'output-image';
+                        outputImagesContainer.appendChild(img);
+                    } else {
+                        alert(`Upscaled image not found for ${inputImages[index].name}.`);
+                    }
+                });
+                outputImagesContainer.style.display = 'flex'; // Show output images
+                document.getElementById('downloadButton').setAttribute('href', outputImagePaths.join(','));
+                document.getElementById('downloadContainer').style.display = 'block'; // Show download button
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("An error occurred while fetching the upscaled image.");
-                document.getElementById('outputImage').style.display = 'none';
+                alert("An error occurred while fetching the upscaled images.");
             })
             .finally(() => {
-                // Hide loader after fetching the output
                 document.getElementById('loader').style.display = 'none';
             });
-    }, 10000);
+    }, 10000); // Change timeout to 30 seconds
 }

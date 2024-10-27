@@ -9,20 +9,29 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="header">
         <h1>Everyday AI</h1>
+        <span id="downloadContainer" style="display: none;">
+            <a id="downloadButton" href="#" download>
+                <button class="download-btn">Download All</button>
+            </a>
+        </span>
+    </div>
+    <div class="container">
         <hr>
         <div class="upload-section">
             <div class="input-side">
                 <h2>Input Image</h2>
-                <input type="file" id="inputImage" accept="image/*" onchange="handleImageUpload(event)">
-                <img id="previewInputImage" src="" alt="Your Image" class="image">
+                <input type="file" id="inputImage" accept="image/*" multiple onchange="handleImageUpload(event)">
+                <div id="previewInputImages" class="image-container"></div>
             </div>
             <div class="output-side">
-                <h2>Upscaled Output</h2>
+                <h2>
+                    Upscaled Output 
+                </h2>
                 <div class="loader-container" id="loader-container" style="display: none;">
                     <div id="loader" class="loader" style="display: none;"></div>
-                    <img id="outputImage" src="" alt="Upscaled Image" class="image output-image" style="display: none;">
+                    <div id="outputImages" class="output-images" style="display: none;"></div>
                 </div>
             </div>
         </div>

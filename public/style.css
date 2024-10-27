@@ -4,6 +4,29 @@ body {
     margin: 0;
     height: 90vh;
     display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: black; 
+    color: white; 
+    padding: 10px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.download-btn {
+    background-color: #3498db; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 15px; 
+    cursor: pointer; 
+}
+
+.download-btn:hover {
+    background-color: #2980b9; 
 }
 
 .container {
@@ -12,27 +35,56 @@ body {
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1; 
 }
 
 .upload-section {
     width: 100% !important;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start; /* Align items to the start */
+}
+
+.input-side, .output-side {
+    flex: 1; /* Make both sides take equal space */
+    margin: 10px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    height: 200%; /* Ensure both sides take the same height */
 }
 
 h1, h2 {
-    text-align: center;
+    text-align: left; 
+}
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Center images horizontally */
+    flex-wrap: wrap; /* Allow images to wrap */
+    align-items: flex-start; /* Align images at the top */
 }
 
 .image {
-    display: none;
-    width: 600px;
-    height: 650px;
+    width: 300px; /* Width of input images */
+    height: auto; /* Maintain aspect ratio */
+    margin: 10px; /* Add spacing around images */
+}
+
+.output-images {
+    display: flex;
+    justify-content: center; /* Center output images */
+    flex-wrap: wrap; /* Allow images to wrap */
+    align-items: flex-start;
+    margin-top: -150px; /* Align images at the top */
 }
 
 .output-image {
-    margin-top: 25px;
+    width: 300px; /* Width of output images */
+    height: auto; /* Maintain aspect ratio */
+    margin: 10px;
+    margin-top: -200px;
+     /* Add spacing around images */
 }
 
 .loader-container {
@@ -42,7 +94,6 @@ h1, h2 {
     justify-content: center;
     position: relative;
 }
-
 
 .loader {
     border: 8px solid #f3f3f3;
@@ -57,4 +108,10 @@ h1, h2 {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
